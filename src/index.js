@@ -3,6 +3,6 @@ const { createConnection } = require('./database');
 
 createConnection()
 
-app.listen(4000)
+app.listen(3001)
 
-console.log('server on port', 4000)
+console.log('server on port', 3001)

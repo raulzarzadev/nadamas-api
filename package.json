@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "lowdb": "^1.0.0",
     "morgan": "^1.9.1",
@@ -12,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev":"nodemon src/index.js --ignore db.json"
+    "dev": "nodemon src/index.js --ignore db.json"
   },
   "author": "",
   "license": "ISC"

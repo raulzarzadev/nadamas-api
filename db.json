@@ -1,24 +1,16 @@
 {
-  "tasks": [
+  "entrenos": [
     {
-      "id": "94a4f8eb-d803-4282-aa0e-1ad0824126fc",
-      "name": "titulo 1",
-      "description": "esta es descripcion 1"
-    },
-    {
-      "id": "f164b999-8c87-4c2f-9493-439072aa2c6a",
-      "name": "titulo 2",
-      "description": "esta es descripcion 2"
-    },
-    {
-      "id": "79027905-5b8c-459b-8ad2-3122455a2aa8",
-      "name": "nueva nota ",
-      "description": "Nuevo comentairos de nota nueva"
-    },
-    {
-      "id": "e5206553-ba78-4909-a91a-f84c09299717",
-      "name": "Super nota  ",
-      "description": ""
+      "id": "384b3ab0-5a96-11ea-94f5-03301bdf00fc",
+      "titulo": "hola",
+      "descripcion": "saludos",
+      "series": [
+        {
+          "estilo": "crawl",
+          "vueltas": "5"
+        }
+      ]
     }
-  ]
+  ],
+  "users": []
 }
