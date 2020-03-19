@@ -13,8 +13,9 @@ const getEntrenos = async (req, res) => {
 
 
 const getEntreno = async (req, res) => {
-    res.json({status: "pidiendo tarea"})
-    console.log(req.params)
+    const entreno = await Entreno.findById(req.params.id)
+    res.json(entreno)
+    console.log('tarea pedida')
     //const entrenos = await Entreno.find()
     //const task = getConnection().get('entrenos').find({id: req.params.id}).value();
 }

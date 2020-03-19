@@ -14,9 +14,10 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //routes
- 
+
 //app.use(require('./routes/task.routes'));
-app.use('/api/entreno',require('./routes/entreno.routes'));
+app.use('/api/entreno', require('./routes/entrenos.routes'));
+app.use('/api/entreno', require('./routes/entreno.routes'))
 
 
 module.exports = app;

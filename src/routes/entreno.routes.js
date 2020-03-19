@@ -2,17 +2,15 @@ const { Router} = require('express')
 const router = Router();
 
 
-const {getEntrenos, getEntreno, createEntreno, updateEntreno, deleteEntreno} = require('../controllers/entreno.controllers')
+const { getEntreno, createEntreno, updateEntreno, deleteEntreno} = require('../controllers/entreno.controllers')
 
-router.route('/')
-    .get(getEntrenos)
+router.route('/:id')
+    .get(getEntreno)
     .post(createEntreno)
+    //.put('/:id', updateEntreno)
+    //.delete('/:id', deleteEntreno)
 
-//router.get('/entrenos', getEntrenos) ;
-router.get('/:id' , getEntreno ) ;
-//router.post('/entreno', createEntreno ) ;
-//router.put('/entreno/:id', updateEntreno ) ;
-//router.delete('/entreno/:id', deleteEntreno) ;
+
 
 
 module.exports = router
