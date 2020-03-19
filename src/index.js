@@ -1,7 +1,9 @@
 const app = require('./app');
-const { createConnection } = require('./database');
+const {mongoose} = require('./database')
 
-createConnection()
+//const { createConnection } = require('./database');
+
+//createConnection()
 
 app.listen(3001)
 

@@ -1,6 +1,7 @@
 const { Router} = require('express')
 const router = Router();
 
+
 const {getEntrenos, getEntreno, createEntreno, updateEntreno, deleteEntreno} = require('../controllers/entreno.controllers')
 
 router.route('/')
@@ -8,7 +9,7 @@ router.route('/')
     .post(createEntreno)
 
 //router.get('/entrenos', getEntrenos) ;
-//router.get('/entreno/:id' , getEntreno ) ;
+router.get('/:id' , getEntreno ) ;
 //router.post('/entreno', createEntreno ) ;
 //router.put('/entreno/:id', updateEntreno ) ;
 //router.delete('/entreno/:id', deleteEntreno) ;

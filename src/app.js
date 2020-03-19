@@ -1,8 +1,11 @@
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
 const cors = require('cors')
 
 const app = express();
+
+//connecting to db 
+
 
 
 //middlewares

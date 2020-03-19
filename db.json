@@ -10,6 +10,20 @@
           "vueltas": "5"
         }
       ]
+    },
+    {
+      "id": "6a96c4c0-5c31-11ea-a75b-07ed5426030f"
+    },
+    {
+      "id": "800251d0-5c31-11ea-a75b-07ed5426030f",
+      "titulo": "titulo x",
+      "descripcion": " descripcion doble x ",
+      "series": [
+        {
+          "estilo": "dorso",
+          "vueltas": 6
+        }
+      ]
     }
   ],
   "users": []

@@ -1,25 +1,35 @@
-const { getConnection } = require('../database')
-const { v1 } = require('uuid')
+//const { getConnection } = require('../database')
+const Entreno = require('../models/entreno')
+//const { v1 } = require('uuid')
 
-const getEntrenos = (req, res) => {
-    const entrenos = getConnection().get('entrenos').value();
-    res.send(entrenos)
+
+const getEntrenos = async (req, res) => {
+    const entrenos = await Entreno.find();
+    console.log(entrenos)
+
+    //const entrenos = getConnection().get('entrenos').value();
+    res.json(entrenos)
 }
 
-const getEntreno = (req, res) => {
+
+const getEntreno = async (req, res) => {
+    res.json({status: "pidiendo tarea"})
+    console.log(req.params)
+    //const entrenos = await Entreno.find()
     //const task = getConnection().get('entrenos').find({id: req.params.id}).value();
 }
 
-const createEntreno = (req, res) => {
-    const newEntreno = {
-        id: v1(),
-        titulo: req.body.titulo,
-        descripcion: req.body.descripcion,
-        series: req.body.series
-    }
-    getConnection().get('entrenos').push(newEntreno).write()
+const createEntreno = async(req, res) => {
+    const {titulo, descripcion, series} = req.body
+    const newEntreno = new Entreno({
+        titulo,
+        descripcion,
+        series
+    })
+    await newEntreno.save()
+    //getConnection().get('entrenos').push(newEntreno).write()
     console.log(newEntreno)
-    res.json(newEntreno)
+    res.json({status: "Entreno Guardado"})
 }
 
 const updateEntreno = async (req, res) => {
@@ -69,7 +79,6 @@ const deleteTask = (req, res) => {
 */
 
 module.exports = {
-    getConnection,
     getEntrenos,
     getEntreno,
     createEntreno,
