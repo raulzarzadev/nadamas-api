@@ -39,7 +39,10 @@ const updateEntreno = async (req, res) => {
     .write()
     res.json(result)
 }
-
+const deleteEntreno = async (req, res) => {
+    await Entreno.findByIdAndDelete(req.params.id)
+    console.log('Entreno eliminado')
+}
 /* 
 
 const getTasks = (req, res) => {
@@ -83,5 +86,6 @@ module.exports = {
     getEntrenos,
     getEntreno,
     createEntreno,
-    updateEntreno
+    updateEntreno,
+    deleteEntreno
 }
