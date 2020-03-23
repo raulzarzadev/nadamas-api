@@ -1,10 +1,7 @@
 const app = require('./app');
 const {mongoose} = require('./database')
 
-//const { createConnection } = require('./database');
 
-//createConnection()
-
-app.listen(3001)
-
-console.log('server on port', 3001)
+app.listen(app.get('port'), ()=> {
+    console.log(`server on port ${app.get('port')}`)
+})

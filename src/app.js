@@ -1,12 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors')
+require('dotenv').config()
 
 const app = express();
 
-//connecting to db 
+//Settings
+app.set('port', process.env.PORT || 3001)
 
-
+//connecting to db
 
 //middlewares
 app.use(cors());
