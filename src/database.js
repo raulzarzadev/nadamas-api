@@ -7,7 +7,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-const URI = process.env.DB_MONGO
+const URI = process.env.DB_REMOTE_MONGO
 
 mongoose.connect(URI)
     .then(db => console.log(`DB is connected`))
