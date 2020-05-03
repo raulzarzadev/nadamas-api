@@ -18,9 +18,8 @@ app.use(express.json());
 
 //routes
 
-//-----app.use(require('./routes/task.routes'));
-app.use('/api/entreno', require('./routes/entrenos.routes'));
-app.use('/api/entreno', require('./routes/entreno.routes'))
+app.use('/api/entrenos', require('./routes/entrenos.routes'));
+
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
