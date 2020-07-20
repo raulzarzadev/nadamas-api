@@ -7,7 +7,7 @@ require('dotenv').config()
 const app = express();
 
 //Settings
-app.set('port', process.env.PORT || 3005)
+app.set('port', process.env.PORT_API || 3001)
 
 //connecting to db
 
@@ -20,6 +20,7 @@ app.use(express.json());
 
 app.use('/api/entrenos', require('./routes/entrenos.routes'));
 
+app.use("/api/users", require("./routes/users.routes"));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
