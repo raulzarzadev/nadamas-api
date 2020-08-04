@@ -1,17 +1,27 @@
-const { Router } = require('express')
+const { Router } = require("express");
 const router = Router();
 const isAuthenticated = require("../authenticatons/jwt.authentication");
 
-const { getEntrenos, createEntreno, getEntreno, updateEntreno, deleteEntreno } = require('../controllers/entreno.controllers')
+const {
+  getEntrenos,
+  createEntreno,
+  getEntreno,
+  updateEntreno,
+  deleteEntreno,
+} = require("../controllers/entreno.controllers");
 
-router.route('/')
-    .get(/* isAuthenticated, */ getEntrenos)
-    .post(/* isAuthenticated,  */createEntreno)
 
-router.route('/:id')
-    .get(/* isAuthenticated, */ getEntreno)
-    .delete(/* isAuthenticated, */ deleteEntreno)
+router
+  .route("/")
+  .get(/* isAuthenticated, */ getEntrenos)
+  .post(/* isAuthenticated,  */ createEntreno);
 
-//.put('/:id', updateEntreno)
+router.route("/edit/:id")
+  .put(/* isAuthenticated, */ updateEntreno);
 
-module.exports = router
+router
+  .route("/:id")
+  .get(/* isAuthenticated, */ getEntreno)
+  .delete(/* isAuthenticated, */ deleteEntreno);
+
+module.exports = router;
