@@ -7,7 +7,7 @@ require('dotenv').config()
 const app = express();
 
 //Settings
-app.set('port', process.env.PORT_API || 3001)
+app.set('port', process.env.PORT_API || 3005)
 
 //connecting to db
 
