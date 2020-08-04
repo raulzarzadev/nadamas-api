@@ -1,0 +1,7 @@
+{
+	"apps":{
+		"name":"Api_nadamas",
+		"script":"npm start"
+	}
+}
+
