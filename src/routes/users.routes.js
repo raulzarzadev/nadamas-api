@@ -9,7 +9,7 @@ const {
   updateUser,
   getTokenSignup,
   tokenSignup,
-  createUser2,
+  createUser,
   signIn,
   getSingIn,
   getCreateUser,
@@ -18,7 +18,7 @@ const {
   resetForm,
 } = require("../controllers/users.controller");
 
-router.route("/signup").post(createUser2).get(getCreateUser);
+router.route("/signup").post(createUser).get(getCreateUser);
 router.route("/signup/:token").get(getTokenSignup).post(tokenSignup);
 router.route("/signin").post(signIn).get(getSingIn);
 router.route("/reset").get(getResetPass).post(resetPass);

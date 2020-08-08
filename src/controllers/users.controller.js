@@ -19,23 +19,21 @@ usersCtrl.getSingIn = (req, res) => {
 
 usersCtrl.signIn = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(req.body);
   //verificando email
-  const user = await User.findOne(
-    { email },
-    { credit: 1, email: 1, password: 1 }
-  );
-  if (!user) return res.json({ ok: false, message: "el usuario no existe" });
+  const user = await User.findOne({ email }, { email: 1, password: 1 });
+  console.log(user);
+  if (!user) return res.json({ ok: false, message: "Este usuario no existe" });
   //validando password
   const isPaswordMatch = await user.matchPassword(password);
   if (!isPaswordMatch)
-  return res.json({
-    ok: false,
-    message: "el password es incorrecto",
-    recoverPasswordUrl: "http://" + req.headers.host + "/api/users/reset/",
-  });
-  
-  console.log("paso")
+    return res.json({
+      ok: false,
+      message: "el password es incorrecto",
+      recoverPasswordUrl: "http://" + req.headers.host + "/api/users/reset/",
+    });
+
+ // console.log("paso");
   //respondiendo usuario y token
   const payload = {
     id: user._id,
@@ -52,14 +50,14 @@ usersCtrl.getCreateUser = (req, res) => {
   res.send("sign up ");
 };
 
-usersCtrl.createUser2 = async (req, res) => {
+usersCtrl.createUser = async (req, res) => {
   const { email } = req.body;
 
   //comprobando usuario
   console.log("create new user", email);
   const user = await User.findOne({ email }, { email: 1 });
   if (user)
-    return res.json({
+    return res.send({
       ok: false,
       message: "Este mail ya esta registrado",
       signInUrl: "http://" + req.headers.host + "/api/users/signin/",
@@ -81,8 +79,7 @@ usersCtrl.createUser2 = async (req, res) => {
 
   await userHelper.sendEmail(email, subject, content);
 
-  const link = `http:// ${req.headers.host}/api/users/signup/${token}`;
-  res.json({ ok: true, message: "email enviado correctamente" });
+  res.json({ ok: true, message: "Revisa tu correo" });
 };
 
 usersCtrl.getTokenSignup = async (req, res) => {
@@ -110,10 +107,8 @@ usersCtrl.tokenSignup = async (req, res) => {
       console.log(err);
       res.json({
         ok: false,
-        message:
-          "Parece que hubo un error. Trata de nuevo http://" +
-          req.headers.host +
-          "/api/users/signup/",
+        message: "Parece que hubo un error. Mejor intenta de nuevo ",
+        link: "/signup",
       });
     } else {
       console.log("token", info);
@@ -129,7 +124,11 @@ usersCtrl.tokenSignup = async (req, res) => {
       const newUser = new User({
         email: info.email,
       });
-      newUser.password = await newUser.encryptPassword(req.body.password);
+      console.log("info", info);
+      console.log("info", req.body);
+      newUser.password = await newUser.encryptPassword(
+        req.body.confirmPassword
+      );
       const payload = {
         id: newUser._id,
         email: newUser.email,
@@ -158,7 +157,7 @@ usersCtrl.resetPass = async (req, res) => {
   const content = `
   Recibiste este correo por que intentas recuperar tu contraseña. Si no has sido tu, por favor ignora este mensaje.\n\n
   Para reestablecer tu password da sigue éste enlace :\n\n"
-    http://${req.headers.host}/api/users/reset/${token}\n\n
+    
     http://localhost:3005/reset/${token}\n\n
     Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
     `;
@@ -166,7 +165,7 @@ usersCtrl.resetPass = async (req, res) => {
   await userHelper.sendEmail(email, subject, content);
 
   const link = `http:// ${req.headers.host}/api/users/signup/${token}`;
-  res.json({ ok: true, message: "email enviado correctamente" });
+  res.json({ ok: true, message: "Revisa tu correo" });
 };
 
 usersCtrl.getResetPass = (req, res) => {
