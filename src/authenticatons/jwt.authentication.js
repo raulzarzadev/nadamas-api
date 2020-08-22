@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 const isAuthenticated = (req, res, next) => {
-const toc = req.getHeader('access-token')
+
   const {headers} = req
-  console.log(toc)
+  console.log(req.headers)
   
   const token = req.headers["access-token"];
   if (!token) {
@@ -12,7 +12,7 @@ const toc = req.getHeader('access-token')
       message: "Sin token",
     });
   }
-  token = token.replace("Bearer ", "");
+  //token = token.replace("Bearer ", "");
   jwt.verify(token, process.env.JWT_SECRET_TEXT, function (err, token) {
     if (err) {
       return res.json({
