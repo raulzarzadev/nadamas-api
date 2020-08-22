@@ -33,7 +33,7 @@ usersCtrl.signIn = async (req, res) => {
       recoverPasswordUrl: "http://" + req.headers.host + "/api/users/reset/",
     });
 
- // console.log("paso");
+  // console.log("paso");
   //respondiendo usuario y token
   const payload = {
     id: user._id,
@@ -42,7 +42,6 @@ usersCtrl.signIn = async (req, res) => {
   const token = await jwt.sign(payload, process.env.JWT_SECRET_TEXT, {
     expiresIn: 60 * 60 * 24,
   });
-
   res.json({ ok: true, message: "bienvendio", user, token });
 };
 

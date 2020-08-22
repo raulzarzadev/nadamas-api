@@ -10,12 +10,12 @@ const {
   deleteEntreno,
 } = require("../controllers/entreno.controllers");
 
-router
-  .route("/")
+router.route("/")
   .get(isAuthenticated, getEntrenos)
   .post(isAuthenticated, createEntreno);
 
-router.route("/edit/:id").put(isAuthenticated, updateEntreno);
+router.route("/edit/:id")
+  .put(isAuthenticated, updateEntreno);
 
 router
   .route("/:id")

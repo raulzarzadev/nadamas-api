@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 
 const isAuthenticated = (req, res, next) => {
+const toc = req.getHeader('access-token')
+  const {headers} = req
+  console.log(toc)
+  
   const token = req.headers["access-token"];
   if (!token) {
     return res.json({
