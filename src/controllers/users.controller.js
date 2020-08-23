@@ -4,10 +4,10 @@ const userHelper = require("../helpers/user.helpers");
 console.log(userHelper);
 
 const usersCtrl = {};
-/* const currentHost = ` http://localhost:${
+/* const currentHost = ` https://localhost:${
   process.env.PORT_NADAMAS_FRONT || 7000
 }`; */
-const currentHost = ` http://nadamas.com.mx`;
+const currentHost = ` https://nadamas.com.mx`;
 //eliminar este metodo
 
 usersCtrl.getUser = async (req, res) => {
@@ -33,7 +33,7 @@ usersCtrl.signIn = async (req, res) => {
     return res.json({
       ok: false,
       message: "el password es incorrecto",
-      recoverPasswordUrl: "http://" + req.headers.host + "/api/users/reset/",
+      recoverPasswordUrl: "https://" + req.headers.host + "/api/users/reset/",
     });
 
   // console.log("paso");
@@ -62,7 +62,7 @@ usersCtrl.createUser = async (req, res) => {
     return res.send({
       ok: false,
       message: "Este mail ya esta registrado",
-      signInUrl: "http://" + req.headers.host + "/api/users/signin/",
+      signInUrl: "https://" + req.headers.host + "/api/users/signin/",
     });
 
   const token = await jwt.sign({ email }, process.env.JWT_SECRET_TEXT, {
@@ -90,7 +90,7 @@ usersCtrl.getTokenSignup = async (req, res) => {
     if (err) {
       console.log(err);
       res.send(
-        "Parece que hubo un error. Trata de nuevo http://" +
+        "Parece que hubo un error. Trata de nuevo https://" +
           req.headers.host +
           "/api/users/signup/"
       );
@@ -119,7 +119,7 @@ usersCtrl.tokenSignup = async (req, res) => {
           ok: false,
           message: "este mail ya esta registrado",
           recoverPasswordUrl:
-            "http://" + req.headers.host + "/api/users/reset/",
+            "https://" + req.headers.host + "/api/users/reset/",
         });
 
       const newUser = new User({
@@ -160,7 +160,7 @@ usersCtrl.resetPass = async (req, res) => {
   Para reestablecer tu password da sigue éste enlace :\n\n"
     
   ${currentHost}/reset/${token}\n\n
-    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
+    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='https:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
     `;
 
   await userHelper.sendEmail(email, subject, content);
@@ -191,7 +191,7 @@ console.log("reset pass", token, confirmPassword)
       res.json({
         ok: false,
         message:
-          "Parece que hubo un error. Trata de nuevo http://" +
+          "Parece que hubo un error. Trata de nuevo https://" +
           req.headers.host +
           "/api/users/signup/",
       });
@@ -219,7 +219,7 @@ console.log("reset pass", token, confirmPassword)
         Ahora puedes acceder a tu cuenta usando tus nuevas credenciales\n\n
         ${currentHost}/signin\n\n
     
-    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
+    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='https:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
     `;
 
         await userHelper.sendEmail(userExist.email, subject, content);
