@@ -12,7 +12,7 @@ const corsOptions = {
 };
 
 
-app.set("port", process.env.PORT_API || 4001);
+app.set("port", process.env.PORT_API || 7001);
 
 //connecting to db
 
