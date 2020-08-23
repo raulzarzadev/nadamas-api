@@ -4,9 +4,10 @@ const userHelper = require("../helpers/user.helpers");
 console.log(userHelper);
 
 const usersCtrl = {};
-const currentHost = ` http://localhost:${
+/* const currentHost = ` http://localhost:${
   process.env.PORT_NADAMAS_FRONT || 7000
-}`;
+}`; */
+const currentHost = ` http://nadamas.com.mx`;
 //eliminar este metodo
 
 usersCtrl.getUser = async (req, res) => {

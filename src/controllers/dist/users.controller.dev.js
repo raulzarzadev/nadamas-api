@@ -8,7 +8,11 @@ var userHelper = require("../helpers/user.helpers");
 
 console.log(userHelper);
 var usersCtrl = {};
-var currentHost = " http://localhost:".concat(process.env.PORT_NADAMAS_FRONT || 7000); //eliminar este metodo
+/* const currentHost = ` http://localhost:${
+  process.env.PORT_NADAMAS_FRONT || 7000
+}`; */
+
+var currentHost = " http://nadamas.com.mx"; //eliminar este metodo
 
 usersCtrl.getUser = function _callee(req, res) {
   var user, adverts;
