@@ -15,7 +15,7 @@ var app = express(); //Settings
 var corsOptions = {
   exposedHeaders: "access-token"
 };
-app.set("port", process.env.PORT_API || 4001); //connecting to db
+app.set("port", process.env.PORT_API || 7001); //connecting to db
 //middlewares
 
 app.use(cors(corsOptions));
