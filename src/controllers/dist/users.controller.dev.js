@@ -7,7 +7,8 @@ var jwt = require("jsonwebtoken");
 var userHelper = require("../helpers/user.helpers");
 
 console.log(userHelper);
-var usersCtrl = {}; //eliminar este metodo
+var usersCtrl = {};
+var currentHost = " http://localhost:".concat(process.env.PORT_NADAMAS_FRONT || 7000); //eliminar este metodo
 
 usersCtrl.getUser = function _callee(req, res) {
   var user, adverts;
@@ -57,7 +58,7 @@ usersCtrl.signIn = function _callee2(req, res) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _req$body = req.body, email = _req$body.email, password = _req$body.password;
-          console.log(req.body); //verificando email
+          console.log("sign in", req.body); //verificando email
 
           _context2.next = 4;
           return regeneratorRuntime.awrap(User.findOne({
@@ -174,8 +175,7 @@ usersCtrl.createUser = function _callee3(req, res) {
           token = _context3.sent;
           //----contenido de email
           subject = " Raul Zarza \uD83D\uDC7B <".concat(process.env.GEMAIL_SENDER, ">");
-          content = "\n    Para continuar con tu registro, por favor sigue \xE9ste enlace :\n\n\n    \n    http://localhost:".concat(process.env.PORT_API || 7000, "/signup/").concat(token, "\n\n\n    "); //http://nadamas.com.mx/signup/${token}\n\n
-
+          content = "\n    Para continuar con tu registro, por favor sigue \xE9ste enlace :\n\n\n    \n    ".concat(currentHost, "/signup/").concat(token, "\n\n\n    ");
           _context3.next = 14;
           return regeneratorRuntime.awrap(userHelper.sendEmail(email, subject, content));
 
@@ -317,7 +317,7 @@ usersCtrl.tokenSignup = function _callee6(req, res) {
 };
 
 usersCtrl.resetPass = function _callee7(req, res) {
-  var email, token, subject, content, link;
+  var email, token, subject, content;
   return regeneratorRuntime.async(function _callee7$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
@@ -334,18 +334,17 @@ usersCtrl.resetPass = function _callee7(req, res) {
         case 4:
           token = _context7.sent;
           subject = " Raul Zarza \uD83D\uDC7B <".concat(process.env.GEMAIL_SENDER, ">");
-          content = "\n  Recibiste este correo por que intentas recuperar tu contrase\xF1a. Si no has sido tu, por favor ignora este mensaje.\n\n\n  Para reestablecer tu password da sigue \xE9ste enlace :\n\n\"\n    \n    http://localhost:3005/reset/".concat(token, "\n\n\n    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petici\xF3n o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/informaci\xF3n </a> .\n,\n    ");
+          content = "\n  Recibiste este correo por que intentas recuperar tu contrase\xF1a. Si no has sido tu, por favor ignora este mensaje.\n\n\n  Para reestablecer tu password da sigue \xE9ste enlace :\n\n\"\n    \n  ".concat(currentHost, "/reset/").concat(token, "\n\n\n    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petici\xF3n o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/informaci\xF3n </a> .\n,\n    ");
           _context7.next = 9;
           return regeneratorRuntime.awrap(userHelper.sendEmail(email, subject, content));
 
         case 9:
-          link = "http:// ".concat(req.headers.host, "/api/users/signup/").concat(token);
           res.json({
             ok: true,
             message: "Revisa tu correo"
           });
 
-        case 11:
+        case 10:
         case "end":
           return _context7.stop();
       }
@@ -380,7 +379,8 @@ usersCtrl.getResetForm = function _callee8(req, res) {
 
 usersCtrl.resetForm = function (req, res) {
   var token = req.params.token;
-  var password = req.body.password;
+  var confirmPassword = req.body.confirmPassword;
+  console.log("reset pass", token, confirmPassword);
   jwt.verify(token, process.env.JWT_SECRET_TEXT, function _callee9(err, info) {
     var userExist, result, payload, _token2, subject, content;
 
@@ -420,13 +420,13 @@ usersCtrl.resetForm = function (req, res) {
             return regeneratorRuntime.awrap(User.findOneAndUpdate({
               email: info.email
             }, {
-              password: password
+              confirmPassword: confirmPassword
             }));
 
           case 12:
             result = _context9.sent;
             _context9.next = 15;
-            return regeneratorRuntime.awrap(result.encryptPassword(req.body.password));
+            return regeneratorRuntime.awrap(result.encryptPassword(confirmPassword));
 
           case 15:
             result.password = _context9.sent;
@@ -443,7 +443,7 @@ usersCtrl.resetForm = function (req, res) {
             _token2 = _context9.sent;
             result.save();
             subject = "\xA1Bien! Recuperaste tu cuenta.";
-            content = "\n        Has recuperado tu contrase\xF1a exitosamente. Si no fuiste tu haz click <a> aqu\xED </a>\n\n\n        Ahora puedes acceder a tu cuenta usando tus nuevas credenciales\n\n\n      http://localhost:3005/signin\n\n\n    \n    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petici\xF3n o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/informaci\xF3n </a> .\n,\n    ";
+            content = "\n        Has recuperado tu contrase\xF1a exitosamente. Si no fuiste tu haz click <a> aqu\xED </a>\n\n\n        Ahora puedes acceder a tu cuenta usando tus nuevas credenciales\n\n\n        ".concat(currentHost, "/signin\n\n\n    \n    Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petici\xF3n o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/informaci\xF3n </a> .\n,\n    ");
             _context9.next = 25;
             return regeneratorRuntime.awrap(userHelper.sendEmail(userExist.email, subject, content));
 

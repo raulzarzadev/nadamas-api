@@ -4,7 +4,9 @@ const userHelper = require("../helpers/user.helpers");
 console.log(userHelper);
 
 const usersCtrl = {};
-
+const currentHost = ` http://localhost:${
+  process.env.PORT_NADAMAS_FRONT || 7000
+}`;
 //eliminar este metodo
 
 usersCtrl.getUser = async (req, res) => {
@@ -19,7 +21,7 @@ usersCtrl.getSingIn = (req, res) => {
 
 usersCtrl.signIn = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  console.log("sign in",req.body);
   //verificando email
   const user = await User.findOne({ email }, { email: 1, password: 1 });
   console.log(user);
@@ -72,10 +74,9 @@ usersCtrl.createUser = async (req, res) => {
   const content = `
     Para continuar con tu registro, por favor sigue éste enlace :\n\n
     
-    http://localhost:${process.env.PORT_API || 7000}/signup/${token}\n\n
+    ${currentHost}/signup/${token}\n\n
     `;
-    //http://nadamas.com.mx/signup/${token}\n\n
-
+ 
   await userHelper.sendEmail(email, subject, content);
 
   res.json({ ok: true, message: "Revisa tu correo" });
@@ -157,13 +158,12 @@ usersCtrl.resetPass = async (req, res) => {
   Recibiste este correo por que intentas recuperar tu contraseña. Si no has sido tu, por favor ignora este mensaje.\n\n
   Para reestablecer tu password da sigue éste enlace :\n\n"
     
-    http://localhost:3005/reset/${token}\n\n
+  ${currentHost}/reset/${token}\n\n
     Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
     `;
 
   await userHelper.sendEmail(email, subject, content);
 
-  const link = `http:// ${req.headers.host}/api/users/signup/${token}`;
   res.json({ ok: true, message: "Revisa tu correo" });
 };
 
@@ -182,8 +182,8 @@ usersCtrl.getResetForm = async (req, res) => {
 
 usersCtrl.resetForm = (req, res) => {
   const { token } = req.params;
-  const { password } = req.body;
-
+  const { confirmPassword } = req.body;
+console.log("reset pass", token, confirmPassword)
   jwt.verify(token, process.env.JWT_SECRET_TEXT, async function (err, info) {
     if (err) {
       console.log(err);
@@ -200,10 +200,10 @@ usersCtrl.resetForm = (req, res) => {
         console.log(userExist);
         const result = await User.findOneAndUpdate(
           { email: info.email },
-          { password }
+          { confirmPassword }
         );
 
-        result.password = await result.encryptPassword(req.body.password);
+        result.password = await result.encryptPassword(confirmPassword);
         const payload = {
           id: result._id,
           email: result.email,
@@ -216,7 +216,7 @@ usersCtrl.resetForm = (req, res) => {
         const content = `
         Has recuperado tu contraseña exitosamente. Si no fuiste tu haz click <a> aquí </a>\n\n
         Ahora puedes acceder a tu cuenta usando tus nuevas credenciales\n\n
-      http://localhost:3005/signin\n\n
+        ${currentHost}/signin\n\n
     
     Recibiste este correo desde nadamas.com.mx . Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
     `;
