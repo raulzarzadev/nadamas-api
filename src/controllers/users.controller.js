@@ -71,10 +71,10 @@ usersCtrl.createUser = async (req, res) => {
   const subject = ` Raul Zarza 👻 <${process.env.GEMAIL_SENDER}>`;
   const content = `
     Para continuar con tu registro, por favor sigue éste enlace :\n\n
-    http://${req.headers.host}/api/users/signup/${token}\n\n
-    http://localhost:3005/signup/${token}\n\n
-    Recibiste este correo para registrarte en nadamas.com.mx. Si no hiciste esta petición o no estas seguro puedes visitarnos <a href='http:// nadamas.com.mx'> nadamas.com.mx/información </a> .\n,
+    
+    http://localhost:${process.env.PORT_API || 7000}/signup/${token}\n\n
     `;
+    //http://nadamas.com.mx/signup/${token}\n\n
 
   await userHelper.sendEmail(email, subject, content);
 
