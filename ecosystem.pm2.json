@@ -1,6 +1,6 @@
 {
 	"apps":{
-		"name":"Api_nadamas",
+		"name":"api_nadamas",
 		"script":"npm start"
 	}
 }
